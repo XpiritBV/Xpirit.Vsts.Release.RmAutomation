@@ -1,0 +1,24 @@
+﻿{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+  "parameters": {
+    "accountName": {
+      "value": "HelloWorld"
+    },
+    "regionId": {
+      "value": "West Europe"
+    },
+    "runbookName": {
+      "value": "HelloWorld"
+    },
+    "runbookURI": {
+      "value": "https://nnplayground.blob.core.windows.net/nncontainer/DeployRunbooks.ps1"
+    },
+    "runbookType": {
+      "value": "Script"
+    },
+    "runbookDescription": {
+      "value": "Test"
+    }
+  }
+}

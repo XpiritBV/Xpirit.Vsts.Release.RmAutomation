@@ -1,0 +1,80 @@
+{
+  "id": "31f040e5-e040-4556-878a-59a47c712833",
+  "name": "DeployRunbooks",
+  "friendlyName": "Azure automation account deployment",
+  "description": "Deploy runbooks to azure automation with release manager",
+  "helpMarkDown": "",
+  "category": "Deploy",
+  "visibility": [ "Release" ],
+  "author": "Peter Groenewegen,Pascal Naber",
+  "version": {
+    "Major": 1,
+    "Minor": 0,
+    "Patch": 87
+  },
+  "demands": [ "azureps" ],
+  "minimumAgentVersion": "1.90.0",
+  "groups": [
+
+    {
+      "name": "configurationOptions",
+      "displayName": "Automation Configuration",  
+      "isExpanded": true
+    }
+  ],
+  "inputs": [
+    {
+      "name": "ConnectedServiceName",
+      "type": "connectedService:Azure",
+      "label": "Azure Subscription",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Azure subscription to configure before running PowerShell"
+    },
+    {
+      "defaultValue": "",
+      "groupName": "configurationOptions",
+      "helpMarkdown": "The name of the automation account",
+      "label": "Automation account name",
+      "name": "AutomationAccount",
+      "required": true,
+      "type": "string"
+    },
+    {
+      "defaultValue": "West Europe",
+      "groupName": "configurationOptions",
+      "helpMarkdown": "Region Id for automation account and storage",
+      "label": "Region",
+      "name": "RegionId",
+      "required": true,
+      "type": "string"
+    },
+    {
+      "defaultValue": "",
+      "groupName": "configurationOptions",
+      "helpMarkdown": "Json files with variables (Specify one or more paths, separated by `;` or newline): { \"variables\" [{ \"name\": \"VaraiableName\", \"value\": \"MyValue\" }] } ",
+      "label": "Files with variables",
+      "name": "VariableFiles",
+      "required": false,
+      "type": "multiLine"
+    },
+
+    {
+      "defaultValue": "",
+      "groupName": "configurationOptions",
+      "helpMarkdown": "The name of the resource group of the automation and storage account",
+      "label": "Resource group name",
+      "name": "ResourceGroupName",
+      "required": true,
+      "type": "string"
+    }
+  ],
+  "instanceNameFormat": "Deploy to automation account azure",
+  "execution": {
+    "AzurePowerShell": {
+      "target": "$(currentDirectory)\\Deploy-Automation.ps1",
+      "argumentFormat": "",
+      "workingDirectory": "$(Build.SourcesDirectory)"
+    }
+  }
+}
