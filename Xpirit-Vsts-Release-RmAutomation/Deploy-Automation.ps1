@@ -73,7 +73,7 @@ Invoke-Expression "& `"$ScriptPath`" -ResourceGroupName $ResourceGroupName -Stor
 #remove blob strorage account
 Write-Output "Remove storage account $StorageAccountName resourcegroupname $ResourceGroupName"
 
-#Get-AzureRmStorageAccount -Name $StorageAccountName -ResourceGroupName $ResourceGroupName | Remove-AzureRmStorageAccount 
+Get-AzureRmStorageAccount -Name $StorageAccountName -ResourceGroupName $ResourceGroupName | Remove-AzureRmStorageAccount 
 
 Write-Output "Finished deployment of Automated Provisioning to AutomationAccount: $AutomationAccount"
 

@@ -1,0 +1,72 @@
+{
+    "manifestVersion":  1,
+    "id":  "PeterGroenewegen-Xpirit-Vsts-Release-RmAutomation-Test",
+    "name":  "Deploy AzureRm Automation",
+    "version":  "1.0.0",
+    "publisher":  "petergroenewegen",
+    "public":  false,
+    "targets":  [
+                    {
+                        "id":  "Microsoft.VisualStudio.Services"
+                    }
+                ],
+    "description":  "Release extension that enable you to deploy AzureRm Automation.",
+    "categories":  [
+                       "Build and release"
+                   ],
+    "tags":  [
+                 "Automation",
+                 "AzureRm",
+                 "release"
+             ],
+    "screenshots":  [
+                        {
+                            "path":  "Xpirit.Vsts.Release.RmAutomation.Extension/images/screenshots/vsts-rmautomation-tasks.png"
+                        },
+                        {
+                            "path":  "Xpirit.Vsts.Release.RmAutomation.Extension/images/screenshots/vsts-rmautomation-rmautomation.png"
+                        }
+                    ],
+    "content":  {
+                    "details":  {
+                                    "path":  "Xpirit.Vsts.Release.RmAutomation.Extension/readme.md"
+                                },
+                    "license":  {
+                                    "path":  "Xpirit.Vsts.Release.RmAutomation.Extension/license.txt"
+                                }
+                },
+    "links":  {
+                  "getstarted":  {
+                                     "uri":  "https://github.com/XpiritBV/Xpirit.Vsts.Release.RmAutomation/wiki"
+                                 },
+                  "support":  {
+                                  "uri":  "https://github.com/XpiritBV/Xpirit.Vsts.Release.RmAutomation/wiki"
+                              }
+              },
+    "branding":  {
+                     "color":  "rgb(36, 43, 50)",
+                     "theme":  "dark"
+                 },
+    "icons":  {
+                  "default":  "Xpirit.Vsts.Release.RmAutomation.Extension/images/Automation128.png"
+              },
+  "files": [
+    {
+      "path": "Xpirit-Vsts-Release-RmAutomation"
+    }
+  ],
+
+    "contributions":  [
+                          {
+                              "id":  "Xpirit-Vsts-Release-RmAutomation",
+                              "type":  "ms.vss-distributed-task.task",
+                              "targets":  [
+                                              "ms.vss-distributed-task.tasks"
+                                          ],
+                              "properties":  {
+                                                 "name":  "Xpirit-Vsts-Release-RmAutomation"
+                                             }
+                          }
+                      ]
+}
+

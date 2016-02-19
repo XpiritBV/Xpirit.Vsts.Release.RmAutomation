@@ -6,11 +6,11 @@
   "helpMarkDown": "",
   "category": "Deploy",
   "visibility": [ "Release" ],
-  "author": "Peter Groenewegen,Pascal Naber",
+  "author": "Peter Groenewegen, Pascal Naber - Xpirit",
   "version": {
     "Major": 1,
     "Minor": 0,
-    "Patch": 87
+    "Patch": 88
   },
   "demands": [ "azureps" ],
   "minimumAgentVersion": "1.90.0",
