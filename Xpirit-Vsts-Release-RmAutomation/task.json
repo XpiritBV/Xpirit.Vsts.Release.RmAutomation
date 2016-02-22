@@ -10,7 +10,7 @@
   "version": {
     "Major": 1,
     "Minor": 0,
-    "Patch": 92
+    "Patch": 93
   },
   "demands": [ "azureps" ],
   "minimumAgentVersion": "1.95.0",

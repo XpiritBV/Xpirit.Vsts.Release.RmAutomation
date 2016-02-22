@@ -26,13 +26,15 @@ $ProjectPath = [System.IO.Path]::Combine($env:SYSTEM_ARTIFACTSDIRECTORY,$env:BUI
 $TemplateFile = [System.IO.Path]::Combine($PSScriptRoot, $TemplateFile)
 
 Foreach ($file in $VariableFilesSplit){
-	$VariablesPath  =  [System.IO.Path]::Combine($ProjectPath, $file)
-	$Variables = Get-Content -Raw -Path $VariablesPath | ConvertFrom-Json 
+    if ($file){
+		$VariablesPath  =  [System.IO.Path]::Combine($ProjectPath, $file)
+		$Variables = Get-Content -Raw -Path $VariablesPath | ConvertFrom-Json 
 
-	foreach  ($var in $Variables.variables){
-		New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
-								-ResourceGroupName $ResourceGroupName `
-								-TemplateFile $TemplateFile -TemplateParameterObject  @{accountName=$AutomationAccount;variableName=$var.name;variableType="string";variableValue=$var.value} -Force -Verbose
+		foreach  ($var in $Variables.variables){
+			New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
+									-ResourceGroupName $ResourceGroupName `
+									-TemplateFile $TemplateFile -TemplateParameterObject  @{accountName=$AutomationAccount;variableName=$var.name;variableType="string";variableValue=$var.value} -Force -Verbose
+		}
 	}
 }
 

@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "PeterGroenewegen-Xpirit-Vsts-Release-RmAutomation",
   "name": "Deploy AzureRm Automation",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "publisher": "petergroenewegen",
   "public": true,
   "targets": [
