@@ -2,7 +2,7 @@
   "id": "31f040e5-e040-4556-878a-59a47c712833",
   "name": "DeployRunbooks",
   "friendlyName": "Azure automation account deployment",
-  "description": "Deploy runbooks to azure automation with release manager",
+  "description": "Deploy runbooks to azurerm automation. Deploy runbooks, variables and modules.",
   "helpMarkDown": "",
   "category": "Deploy",
   "visibility": [ "Release" ],
@@ -10,26 +10,48 @@
   "version": {
     "Major": 1,
     "Minor": 0,
-    "Patch": 88
+    "Patch": 91
   },
   "demands": [ "azureps" ],
-  "minimumAgentVersion": "1.90.0",
+  "minimumAgentVersion": "1.95.0",
   "groups": [
 
     {
       "name": "configurationOptions",
-      "displayName": "Automation Configuration",  
+      "displayName": "Automation Configuration",
       "isExpanded": true
     }
   ],
   "inputs": [
     {
+      "name": "ConnectedServiceNameSelector",
+      "type": "pickList",
+      "label": "Azure Connection Type",
+      "required": false,
+      "helpMarkDown": "",
+      "defaultValue": "ConnectedServiceName",
+      "options": {
+        "ConnectedServiceName": "Azure Classic",
+        "ConnectedServiceNameARM": "Azure Resource Manager"
+      }
+    },
+    {
       "name": "ConnectedServiceName",
       "type": "connectedService:Azure",
-      "label": "Azure Subscription",
+      "label": "Azure Classic Subscription",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "Azure subscription to configure before running PowerShell"
+      "helpMarkDown": "Azure Classic subscription to configure before running PowerShell",
+      "visibleRule": "ConnectedServiceNameSelector = ConnectedServiceName"
+    },
+    {
+      "name": "ConnectedServiceNameARM",
+      "type": "connectedService:AzureRM",
+      "label": "Azure RM Subscription",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Azure Resource Manager subscription to configure before running PowerShell",
+      "visibleRule": "ConnectedServiceNameSelector = ConnectedServiceNameARM"
     },
     {
       "defaultValue": "",

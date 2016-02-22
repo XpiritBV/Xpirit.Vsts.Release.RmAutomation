@@ -3,7 +3,11 @@
 #Requires -Module Azure.Storage
 
 Param(
-    [string] $ResourceGroupName,
+    [String] [Parameter(Mandatory = $true)] $ConnectedServiceNameSelector,    
+    [String] $ConnectedServiceName,
+    [String] $ConnectedServiceNameARM,
+    
+	[string] $ResourceGroupName,
 	[string] $StorageAccountName,
 	[string] $StorageContainerName,
 	[string] $StorageAccountKey,
@@ -12,14 +16,6 @@ Param(
     [string] $TemplateFile
 )
 Import-Module Azure -ErrorAction SilentlyContinue
-
-Write-Output "  [string] ResourceGroupName $ResourceGroupName,"
-Write-Output " [string] StorageAccountName $StorageAccountName,"
-Write-Output " [string] StorageContainerName $StorageContainerName,"
-Write-Output " [string] StorageAccountKey $StorageAccountKey,"
-Write-Output " [string] RegionId $RegionId,"
-Write-Output " [string] AutomationAccount $AutomationAccount,"
-Write-Output "    [string] TemplateFile $TemplateFile"
 
 try {
     [Microsoft.Azure.Common.Authentication.AzureSession]::ClientFactory.AddUserAgent("VSAzureTools-$UI$($host.name)".replace(" ","_"), "2.8")
