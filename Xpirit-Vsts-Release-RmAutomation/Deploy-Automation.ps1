@@ -1,6 +1,8 @@
 ﻿[CmdletBinding(DefaultParameterSetName = 'None')]
 Param(
-    [String] [Parameter(Mandatory = $true)] $ConnectedServiceName,  
+    [String] [Parameter(Mandatory = $true)] $ConnectedServiceNameSelector,    
+    [String] $ConnectedServiceName,
+    [String] $ConnectedServiceNameARM, 
 
     [string] $ResourceGroupName ,
 	[string] $RegionId ,

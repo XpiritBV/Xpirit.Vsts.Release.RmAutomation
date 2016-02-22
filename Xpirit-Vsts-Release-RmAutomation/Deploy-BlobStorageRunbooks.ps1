@@ -3,9 +3,7 @@
 #Requires -Module Azure.Storage
 
 Param(
-    [String] [Parameter(Mandatory = $true)] $ConnectedServiceNameSelector,    
-    [String] $ConnectedServiceName,
-    [String] $ConnectedServiceNameARM,
+  
     
 	[string] $ResourceGroupName,
 	[string] $StorageAccountName,
