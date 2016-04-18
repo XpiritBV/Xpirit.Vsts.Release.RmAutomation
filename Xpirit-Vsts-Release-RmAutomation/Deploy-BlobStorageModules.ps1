@@ -24,7 +24,7 @@ $TemplateFile = [System.IO.Path]::Combine($PSScriptRoot, $TemplateFile)
 Write-Output "Going to deploy Modules to AutomationAccount: $AutomationAccount"
 
 $SourceContext = (Get-AzureRmStorageAccount -ResourceGroupName $ResourceGroupName -Name $StorageAccountName).Context
-	
+
 $blobs = Get-AzureStorageBlob -Container $StorageContainerName -Context $SourceContext
 
 $insertorderblobs = New-Object System.Collections.ArrayList

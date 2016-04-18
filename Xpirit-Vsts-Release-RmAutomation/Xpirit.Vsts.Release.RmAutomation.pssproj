@@ -33,6 +33,7 @@
     <Compile Include="Deploy-Automation.ps1" />
     <Compile Include="Deploy-BlobStorageModules.ps1" />
     <Compile Include="Deploy-BlobStorageRunbooks.ps1" />
+    <Compile Include="Deploy-BlobStorageSchedules.ps1" />
     <Compile Include="Deploy-BlobStorageVariables.ps1" />
     <Compile Include="icon.png" />
     <Compile Include="task.json" />
@@ -40,6 +41,9 @@
     <Compile Include="Templates\deployPublishedRunbook.json" />
     <Compile Include="Templates\deployPublishedRunbook.parameters.json" />
     <Compile Include="Templates\deployVariable.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Templates\deploySchedule.json" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="Build" />

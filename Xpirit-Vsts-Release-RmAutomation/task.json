@@ -10,7 +10,7 @@
   "version": {
     "Major": 1,
     "Minor": 0,
-    "Patch": 93
+    "Patch": 102
   },
   "demands": [ "azureps" ],
   "minimumAgentVersion": "1.95.0",
@@ -23,7 +23,7 @@
     }
   ],
   "inputs": [
-    {
+     {
       "name": "ConnectedServiceNameSelector",
       "type": "pickList",
       "label": "Azure Connection Type",
@@ -31,18 +31,8 @@
       "helpMarkDown": "",
       "defaultValue": "ConnectedServiceName",
       "options": {
-        "ConnectedServiceName": "Azure Classic",
         "ConnectedServiceNameARM": "Azure Resource Manager"
       }
-    },
-    {
-      "name": "ConnectedServiceName",
-      "type": "connectedService:Azure",
-      "label": "Azure Classic Subscription",
-      "defaultValue": "",
-      "required": true,
-      "helpMarkDown": "Azure Classic subscription to configure before running PowerShell",
-      "visibleRule": "ConnectedServiceNameSelector = ConnectedServiceName"
     },
     {
       "name": "ConnectedServiceNameARM",
@@ -53,7 +43,7 @@
       "helpMarkDown": "Azure Resource Manager subscription to configure before running PowerShell",
       "visibleRule": "ConnectedServiceNameSelector = ConnectedServiceNameARM"
     },
-    {
+   {
       "defaultValue": "",
       "groupName": "configurationOptions",
       "helpMarkdown": "The name of the automation account",
@@ -74,13 +64,30 @@
     {
       "defaultValue": "",
       "groupName": "configurationOptions",
-      "helpMarkdown": "Json files with variables (Specify one or more paths, separated by `;` or newline): { \"variables\" [{ \"name\": \"VaraiableName\", \"value\": \"MyValue\" }] } ",
+      "helpMarkdown": "Runbook files or wildcards to the ps1 files",
+      "label": "Runbooks",
+      "name": "RunbookFiles",
+      "required": false,
+      "type": "multiLine"
+    },
+    {
+      "defaultValue": "",
+      "groupName": "configurationOptions",
+      "helpMarkdown": "Module files or wildcards to the zip files",
+      "label": "Modules",
+      "name": "ModuleFiles",
+      "required": false,
+      "type": "multiLine"
+    },
+    {
+      "defaultValue": "",
+      "groupName": "configurationOptions",
+      "helpMarkdown": "Json files with variables (Specify one or more paths, separated by `;` or newline): { \"variables\": [{ \"name\": \"VaraiableName\", \"value\": \"MyValue\" }] } ",
       "label": "Files with variables",
       "name": "VariableFiles",
       "required": false,
       "type": "multiLine"
     },
-
     {
       "defaultValue": "",
       "groupName": "configurationOptions",

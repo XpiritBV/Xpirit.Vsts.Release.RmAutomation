@@ -7,7 +7,10 @@ Param(
     [string] $ResourceGroupName ,
 	[string] $RegionId ,
 	[string] $AutomationAccount ,
-	[string] $VariableFiles
+	[string] $VariableFiles,
+	[string] $RunbookFiles,
+	[string] $ModuleFiles
+
 )
 
 Import-Module Azure #-ErrorAction SilentlyContinue
@@ -18,6 +21,7 @@ try {
 
 Set-StrictMode -Version 3
 
+#$SchedulesTemplateFile = 'Templates\deploySchedule.json'
 $VariablesTemplateFile = 'Templates\deployVariable.json'
 $RunbooksTemplateFile = 'Templates\deployPublishedRunbook.json'
 $ModuleTemplateFile= 'Templates\deployModule.json'
@@ -35,7 +39,7 @@ Write-Output "Create resourcegroup $ResourceGroupName"
 
 Import-Module AzureRm.Resources
 
-  New-AzureRmResourceGroup -Name $ResourceGroupName -Location $RegionId -Force
+New-AzureRmResourceGroup -Name $ResourceGroupName -Location $RegionId -Force
 
 Write-Output "Create blob storage account: $StorageAccountName"
 
@@ -47,16 +51,53 @@ $SourceContext = (Get-AzureRmStorageAccount -ResourceGroupName $ResourceGroupNam
 
 New-AzureStorageContainer -Context $SourceContext -Container $StorageContainerName -Permission Blob
 
-get-childitem $ProjectPath -recurse | where {$_.extension -eq ".ps1"} | % {
-	$fullname =  $_.FullName
-    Write-Host "Upload blob file $fullname"
-    Set-AzureStorageBlobContent  -Context $SourceContext -Container $StorageContainerName  -File $fullname -Blob $fullname.Substring(3).Replace(" ","")
+if ($RunbookFiles){
+	[string[]] $RunbookFilesSplit = $RunbookFiles -split ';|\r?\n'
+	foreach($RunbookFile in $RunbookFilesSplit)
+	{
+		if ($RunbookFile)
+		{
+		    $searchPath = [System.IO.Path]::Combine($ProjectPath, $RunbookFile)
+			get-childitem $searchPath -recurse | where {$_.extension -eq ".ps1"} | % {
+				$fullname =  $_.FullName
+				Write-Host "Upload blob file $fullname"
+				Set-AzureStorageBlobContent  -Context $SourceContext -Container $StorageContainerName  -File $fullname -Blob $fullname.Substring(3).Replace(" ","")
+			}
+		}
+    }
+}
+else
+{
+	get-childitem $ProjectPath -recurse | where {$_.extension -eq ".ps1"} | % {
+		$fullname =  $_.FullName
+		Write-Host "Upload blob file $fullname"
+		Set-AzureStorageBlobContent  -Context $SourceContext -Container $StorageContainerName  -File $fullname -Blob $fullname.Substring(3).Replace(" ","")
+	}
 }
 
-get-childitem $ProjectPath -recurse | where {$_.extension -eq ".zip"} | % {
-    $fullname =  $_.FullName
-    Write-Host "Upload blob file $fullname"
-    Set-AzureStorageBlobContent  -Context $SourceContext -Container $StorageContainerName  -File $fullname -Blob $fullname.Substring(3).Replace(" ","")
+if ($ModuleFiles)
+{
+    [string[]] $ModuleFilesSplit = $ModuleFiles -split ';|\r?\n'
+	foreach($ModuleFile in $ModuleFilesSplit)
+	{
+		if ($ModuleFile)
+		{
+		    $searchPath = [System.IO.Path]::Combine($ProjectPath, $ModuleFile)
+			get-childitem $searchPath -recurse | where {$_.extension -eq ".zip"} | % {
+				$fullname =  $_.FullName
+				Write-Host "Upload blob file $fullname"
+				Set-AzureStorageBlobContent  -Context $SourceContext -Container $StorageContainerName  -File $fullname -Blob $fullname.Substring(3).Replace(" ","")
+			}
+		}
+    }
+}
+else
+{
+	get-childitem $ProjectPath -recurse | where {$_.extension -eq ".zip"} | % {
+		$fullname =  $_.FullName
+		Write-Host "Upload blob file $fullname"
+		Set-AzureStorageBlobContent  -Context $SourceContext -Container $StorageContainerName  -File $fullname -Blob $fullname.Substring(3).Replace(" ","")
+	}
 }
 
 Write-Output "Create automation account -Name $AutomationAccount -Location $RegionId -ResourceGroupName $ResourceGroupName"
@@ -67,10 +108,13 @@ $scriptPath = (Join-Path -Path $ScriptDirectory -ChildPath "Deploy-BlobStorageVa
 Invoke-Expression "& `"$ScriptPath`" -ResourceGroupName $ResourceGroupName -AutomationAccount $AutomationAccount -TemplateFile $VariablesTemplateFile -VariableFiles `"$VariableFiles`"" 
 
 $scriptPath = (Join-Path -Path $ScriptDirectory -ChildPath "Deploy-BlobStorageRunbooks.ps1")
-Invoke-Expression "& `"$ScriptPath`" -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageAccountName -StorageContainerName $StorageContainerName -StorageAccountKey $StorageAccountKey -AutomationAccount $AutomationAccount -RegionId `"$RegionId`" -TemplateFile $RunbooksTemplateFile"
+Invoke-Expression "& `"$ScriptPath`" -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageAccountName -StorageContainerName $StorageContainerName -StorageAccountKey $StorageAccountKey -AutomationAccount $AutomationAccount -RegionId `"$RegionId`" -TemplateFile $RunbooksTemplateFile" 
 
 $scriptPath = (Join-Path -Path $ScriptDirectory -ChildPath "Deploy-BlobStorageModules.ps1")
-Invoke-Expression "& `"$ScriptPath`" -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageAccountName -StorageContainerName $StorageContainerName -StorageAccountKey $StorageAccountKey -AutomationAccount $AutomationAccount  -TemplateFile $ModuleTemplateFile"
+Invoke-Expression "& `"$ScriptPath`" -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageAccountName -StorageContainerName $StorageContainerName -StorageAccountKey $StorageAccountKey -AutomationAccount $AutomationAccount  -TemplateFile $ModuleTemplateFile" 
+
+#$scriptPath = (Join-Path -Path $ScriptDirectory -ChildPath "Deploy-BlobStorageSchedules.ps1")
+#Invoke-Expression "& `"$ScriptPath`" -ResourceGroupName $ResourceGroupName -AutomationAccount $AutomationAccount -TemplateFile $SchedulesTemplateFile -ScheduleFiles `"$ScheduleFiles`"" 
 
 #remove blob strorage account
 Write-Output "Remove storage account $StorageAccountName resourcegroupname $ResourceGroupName"

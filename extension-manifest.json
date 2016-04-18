@@ -2,15 +2,15 @@
   "manifestVersion": 1,
   "id": "PeterGroenewegen-Xpirit-Vsts-Release-RmAutomation",
   "name": "Deploy AzureRm Automation",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "publisher": "petergroenewegen",
-  "public": true,
+  "public": true, 
   "targets": [
     {
       "id": "Microsoft.VisualStudio.Services"
     }
   ],
-  "description": "Release extension that enable you to deploy AzureRm Automation. Deploy runbooks, variables and modules.",
+  "description": "Release extension that enable you to deploy AzureRm Automation. Deploy runbooks, variables, schedules and modules.",
   "categories": [
     "Build and release"
   ],
@@ -26,7 +26,10 @@
       "path": "Xpirit.Vsts.Release.RmAutomation.Extension/images/screenshots/vsts-rmautomation-tasks.png"
     },
     {
-      "path": "Xpirit.Vsts.Release.RmAutomation.Extension/images/screenshots/vsts-rmautomation-rmautomation.png"
+      "path": "Xpirit.Vsts.Release.RmAutomation.Extension/images/screenshots/vsts-rmautomation-rmautomation1.png"
+    },
+    {
+      "path": "Xpirit.Vsts.Release.RmAutomation.Extension/images/screenshots/vsts-rmautomation-rmautomation2.png"
     }
   ],
   "content": {

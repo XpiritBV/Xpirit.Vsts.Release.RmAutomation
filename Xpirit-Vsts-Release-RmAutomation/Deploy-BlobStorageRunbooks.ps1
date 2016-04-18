@@ -29,7 +29,7 @@ $SourceContext = (Get-AzureRmStorageAccount -ResourceGroupName $ResourceGroupNam
 	
 $blobs = Get-AzureStorageBlob -Container $StorageContainerName -Context $SourceContext
 
-$insertorderblobs = New-Object System.Collections.ArrayList
+$insertorderblobs = New-Object System.Collections.ArrayList  
 
 if ($blobs)   
 {
