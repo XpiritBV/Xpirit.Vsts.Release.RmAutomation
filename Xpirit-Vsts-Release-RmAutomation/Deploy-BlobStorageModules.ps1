@@ -41,11 +41,14 @@ foreach ($item in $insertorderblobs)
 {
 	$Name = $item.Split('/')[$item.Split('/').Length-1].Split('.')[0].ToString()
 	$ModuleURI = -join($SourceContext.BlobEndPoint, $StorageContainerName,"/", $item) 
-
+    
+	Write-Output "Deploying module $Name"	
+    
 	New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
                             -ResourceGroupName $ResourceGroupName `
-                            -TemplateFile $TemplateFile -TemplateParameterObject @{accountName=$AutomationAccount;moduleName=$Name;moduleURI=$ModuleURI} -Force -Verbose
-	
+                            -TemplateFile $TemplateFile -TemplateParameterObject @{accountName=$AutomationAccount;moduleName=$Name;moduleURI=$ModuleURI} -Force -Verbose  | out-null 
+
+    Write-Output "Module $Name deployed"	
 }
 
 Write-Output "Succesfully deployed Modules to AutomationAccount: $AutomationAccount"

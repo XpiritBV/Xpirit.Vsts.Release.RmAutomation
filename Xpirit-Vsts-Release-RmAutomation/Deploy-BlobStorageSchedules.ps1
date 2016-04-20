@@ -31,12 +31,15 @@ Foreach ($file in $ScheduleFilesSplit){
 		$Schedules = Get-Content -Raw -Path $SchedulesPath | ConvertFrom-Json 
 
 		foreach  ($var in $Schedules.schedules){
+	        Write-Output "Deploying variable $Name"	
+
 			New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
 									-ResourceGroupName $ResourceGroupName `
-									-TemplateFile $TemplateFile -TemplateParameterObject  @{accountName=$AutomationAccount;scheduleName=$var.scheduleName;runbookName=$var.runbookName;startTime=$var.startTime;frequency=$var.frequency;interval=$var.interval;jobScheduleGuid=$var.jobScheduleGuid} -Force -Verbose
+									-TemplateFile $TemplateFile -TemplateParameterObject  @{accountName=$AutomationAccount;scheduleName=$var.scheduleName;runbookName=$var.runbookName;startTime=$var.startTime;frequency=$var.frequency;interval=$var.interval;jobScheduleGuid=$var.jobScheduleGuid} -Force -Verbose | out-null
+
+            Write-Output "Variable $Name deployed"	
 		}
 	}
 }
-
 
 Write-Output "Finished deployment of schedules to AutomationAccount: $AutomationAccount"

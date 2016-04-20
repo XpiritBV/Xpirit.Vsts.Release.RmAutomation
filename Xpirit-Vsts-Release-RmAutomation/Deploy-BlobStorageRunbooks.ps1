@@ -54,10 +54,13 @@ foreach ($item in $insertorderblobs)
 	$Name = $item.Split('/')[$item.Split('/').Length-1].Split('.')[0].ToString()
 	$RunbookURI = -join($SourceContext.BlobEndPoint, $StorageContainerName,"/", $item)
 
+	Write-Output "Deploying runbook $Name"	
+
 	New-AzureRmResourceGroupDeployment -Name ((Get-ChildItem $TemplateFile).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm')) `
                             -ResourceGroupName $ResourceGroupName `
-                            -TemplateFile $TemplateFile -TemplateParameterObject  @{accountName=$AutomationAccount;regionId=$RegionId;runbookName=$Name;runbookURI=$RunbookURI;runbookType='Script';runbookDescription='Auto deploy'} -Force -Verbose
-	
+                            -TemplateFile $TemplateFile -TemplateParameterObject  @{accountName=$AutomationAccount;regionId=$RegionId;runbookName=$Name;runbookURI=$RunbookURI;runbookType='Script';runbookDescription='Auto deploy'} -Force -Verbose | out-null 
+  
+    Write-Output "Runbook $Name deployed"	
 }
 
 Write-Output "Finished deployment of Runbooks to AutomationAccount: $AutomationAccount"
