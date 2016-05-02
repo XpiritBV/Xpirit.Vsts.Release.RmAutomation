@@ -39,7 +39,7 @@ Write-Output "Create resourcegroup $ResourceGroupName"
 
 Import-Module AzureRm.Resources
 
-New-AzureRmResourceGroup -Name $ResourceGroupName -Location $RegionId -Force
+New-AzureRmResourceGroup -Name $ResourceGroupName -Location $RegionId -Force | Out-Null
 
 Write-Output "Create blob storage account: $StorageAccountName"
 
@@ -104,14 +104,14 @@ Write-Output "Create automation account -Name $AutomationAccount -Location $Regi
 
 New-AzureRmAutomationAccount -Name $AutomationAccount -Location $RegionId -ResourceGroupName $ResourceGroupName 
 
-$scriptPath = (Join-Path -Path $ScriptDirectory -ChildPath "Deploy-BlobStorageVariables.ps1")
-Invoke-Expression "& `"$ScriptPath`" -ResourceGroupName $ResourceGroupName -AutomationAccount $AutomationAccount -TemplateFile $VariablesTemplateFile -VariableFiles `"$VariableFiles`"" 
-
 $scriptPath = (Join-Path -Path $ScriptDirectory -ChildPath "Deploy-BlobStorageRunbooks.ps1")
 Invoke-Expression "& `"$ScriptPath`" -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageAccountName -StorageContainerName $StorageContainerName -StorageAccountKey $StorageAccountKey -AutomationAccount $AutomationAccount -RegionId `"$RegionId`" -TemplateFile $RunbooksTemplateFile" 
 
 $scriptPath = (Join-Path -Path $ScriptDirectory -ChildPath "Deploy-BlobStorageModules.ps1")
 Invoke-Expression "& `"$ScriptPath`" -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageAccountName -StorageContainerName $StorageContainerName -StorageAccountKey $StorageAccountKey -AutomationAccount $AutomationAccount  -TemplateFile $ModuleTemplateFile" 
+
+$scriptPath = (Join-Path -Path $ScriptDirectory -ChildPath "Deploy-BlobStorageVariables.ps1")
+Invoke-Expression "& `"$ScriptPath`" -ResourceGroupName $ResourceGroupName -AutomationAccount $AutomationAccount -TemplateFile $VariablesTemplateFile -VariableFiles `"$VariableFiles`"" 
 
 #$scriptPath = (Join-Path -Path $ScriptDirectory -ChildPath "Deploy-BlobStorageSchedules.ps1")
 #Invoke-Expression "& `"$ScriptPath`" -ResourceGroupName $ResourceGroupName -AutomationAccount $AutomationAccount -TemplateFile $SchedulesTemplateFile -ScheduleFiles `"$ScheduleFiles`"" 
