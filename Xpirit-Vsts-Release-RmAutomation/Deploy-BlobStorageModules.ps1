@@ -666,34 +666,5 @@ $items | Invoke-Parallel -ImportVariables -ImportModules -ScriptBlock {
 	Write-Output "Module $Name deployed"	
 }
 
-
-
-#workflow Deploy {
-#	param(
-#		[parameter(Mandatory=$true)] [System.Collections.ArrayList] $items, 
-#		[parameter(Mandatory=$true)] [Microsoft.WindowsAzure.Commands.Common.Storage.AzureStorageContext] $SourceContext, 
-#		[parameter(Mandatory=$true)] [String] $StorageContainerName, 
-#		[parameter(Mandatory=$true)] [String] $TemplateFile, 
-#		[parameter(Mandatory=$true)] [String] $ResourceGroupName, 
-#		[parameter(Mandatory=$true)] [String] $AutomationAccount
-#	)
-
-#	ForEach -Parallel ($item in $items){
-#		inlinescript{
-#            $item = $using:item
-#			$SourceContext = $using:SourceContext
-#			$StorageContainerName = $using:StorageContainerName
-#			$TemplateFile = $using:TemplateFile
-#			$ResourceGroupName = $using:ResourceGroupName
-#			$AutomationAccount = $using:AutomationAccount
-
-
-			
-#		}
-#	}
-#}
-
-#Deploy -items $items -SourceContext $SourceContext -StorageContainerName $StorageContainerName -TemplateFile $TemplateFile -ResourceGroupName $ResourceGroupName -AutomationAccount $AutomationAccount
-	
 Write-Output "Succesfully deployed Modules to AutomationAccount: $AutomationAccount"
 
