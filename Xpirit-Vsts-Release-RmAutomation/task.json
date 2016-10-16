@@ -103,7 +103,7 @@
     "AzurePowerShell": {
       "target": "$(currentDirectory)\\Deploy-Automation.ps1",
       "argumentFormat": "",
-      "workingDirectory": "$(Build.SourcesDirectory)"
+      "workingDirectory": "$(currentDirectory)"
     }
   }
 }
