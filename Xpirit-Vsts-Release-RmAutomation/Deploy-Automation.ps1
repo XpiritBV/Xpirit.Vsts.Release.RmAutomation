@@ -44,7 +44,7 @@ New-AzureRmResourceGroup -Name $ResourceGroupName -Location $RegionId -Force | O
 Write-Output "Create blob storage account: $StorageAccountName"
 
 New-AzureRmStorageAccount -ResourceGroupName $ResourceGroupName -Location $RegionId -StorageAccountName $StorageAccountName -Type "Standard_LRS" 
-[string] $StorageAccountKey = Get-AzureRmStorageAccountKey -Name $StorageAccountName -ResourceGroupName $ResourceGroupName | %{ $_.Key1 } 
+[string] $StorageAccountKey = Get-AzureRmStorageAccountKey -Name $StorageAccountName -ResourceGroupName $ResourceGroupName | %{ $_.Value[0] } 
 
 Write-Output "Copy files in blobstorage container $StorageContainerName"
 $SourceContext = (Get-AzureRmStorageAccount -ResourceGroupName $ResourceGroupName -Name $StorageAccountName).Context
