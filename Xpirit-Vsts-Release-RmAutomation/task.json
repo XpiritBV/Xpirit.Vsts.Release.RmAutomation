@@ -9,8 +9,8 @@
   "author": "Peter Groenewegen, Pascal Naber - Xpirit",
   "version": {
     "Major": 1,
-    "Minor": 0,
-    "Patch": 126
+    "Minor": 1,
+    "Patch": 0
   },
   "demands": [ "azureps" ],
   "minimumAgentVersion": "1.95.0",
